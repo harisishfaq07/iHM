@@ -1,0 +1,48 @@
+<h2 class="ui center aligned icon header">
+  <i class="circular check icon green"></i>
+  Activate Your Account
+</h2>
+
+<div class="set_step"> 
+<div class="ui ordered steps ">
+  <div class="completed step">
+    <div class="content">
+      <div class="title">Sign-up</div>
+      <div class="description">Congratulations!</div>
+    </div>
+  </div>
+  <div class="completed step">
+    <div class="content">
+      <div class="title">Billing</div>
+      <div class="description">Congratulations!</div>
+    </div>
+  </div>
+  <div class="active step">
+    <div class="content">
+      <div class="title">Account Activate</div>
+      <div class="description">Verify your Account</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<br><br><br>
+<div class="ui container">
+<%= form_for(User.new, url: user_do_activate_account_path(@user)) do |f| %>
+    <div class = "ui form">
+    <div class = "two fields">
+        <%= f.hidden_field :id , :value => @user.id%>
+        <%= f.text_field :active_token , placeholder: "Enter your secret key"%>
+    </div>
+    <br><br><br><br><br><br>
+    <div>
+        <%= f.submit "Activate" , class:"ui blue submit button centered"%>
+     
+    </div>
+    </div>
+
+<% end %>
+<% if @error > 0 %>
+<%= button_to "Resend Token" , user_regenerate_active_token_path(id: @user.id)%>
+<% end %>
+</div>

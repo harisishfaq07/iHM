@@ -5,14 +5,64 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+  <div class="ui menu set inverted black">
+  <a class="active item ">
+   <span class = "redirect"> iHouseManagement <i class="home icon red"></i></span>
+  </a>
+  <div class="right menu">
+   <% if !user_signed_in? %>
+    <div class="item" >
+      <i class="icon sign-in"></i>  <%= link_to "Login" , new_user_session_path %>
+    </div>
+    <% else %>
+    <div class="item" >
+    <i class="icon sign-out"></i>  <%= button_to "Logout" , destroy_user_session_path , method: :delete %>
+    </div>
+    <% end %>
+
+  </div>
+</div>
+<% if notice.present? %>
+<div class="ui positive message transition close">
+<i class="close icon shut"></i>
+<p class="notice"><%= notice %></p>
+</div>
+<%end%>
+<% if alert.present? %>
+<div class="ui negative message close">
+<i class="close icon shut"></i>
+<p class="alert"><%= alert %></p>
+</div>
+ <% end %>
+
+
+ <script>
+$(document).ready(function(){
+  $(".shut").click(function(){
+    $(".close").hide();
+  })
+})
+
+ </script>
+
+
+
+
     <%= yield %>
   </body>
 </html>
+
+<script>
+$(document).ready(function(){
+  $(".redirect").click(function(){
+    window.location.href = "http://localhost:3000";
+  })
+})
+
+</script>
