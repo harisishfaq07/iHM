@@ -1,1 +1,7 @@
-<h1>Homepage1</h1>
+<div>
+    <%= video_tag "video.mp4" , autoplay: :autoplay, loop: :loop, muted: :muted, class: "home_video" %>
+    <div>
+    <button class="ui inverted button centered"><i class="icon user red"></i><%= link_to "Register Yourself"  , new_user_registration_path %></button>
+    <h2 class="head1">Keep your family up-to-date in your busy routine</h2>
+    </div>
+</div>

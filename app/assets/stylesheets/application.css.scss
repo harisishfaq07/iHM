@@ -1,0 +1,49 @@
+@import 'semantic-ui';
+@import 'semantic-ui/collections/menu';
+
+
+
+
+.home_video {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    object-fit: cover;
+    top: 0;
+    z-index: -2;
+   }
+
+   .set{
+    top: 0;
+    height: 50px;
+   }
+
+   .centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+  }
+
+  .head1{
+    margin: 50px 0 0 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+  }
+
+  .head1:hover {
+    color: rgb(48, 26, 26);
+  }
+
+  .set_step{
+    width: 50%;
+    margin: 0px 0px 0px 27%
+
+  }
+  

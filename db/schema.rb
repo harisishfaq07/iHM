@@ -10,7 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_26_000841) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_26_113404) do
+  create_table "packages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.integer "contacts_allowed"
+    t.integer "price"
+    t.integer "status", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "payments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "package_no"
+    t.bigint "card_no"
+    t.integer "cvc"
+    t.string "brand"
+    t.string "exp_month"
+    t.string "exp_year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -19,6 +40,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_26_000841) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "gender"
+    t.integer "parent_id", default: 0
+    t.string "country"
+    t.string "dateofbirth"
+    t.string "first_name"
+    t.string "last_name"
+    t.integer "status", default: 0
+    t.string "active_token", default: ""
+    t.integer "payment", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

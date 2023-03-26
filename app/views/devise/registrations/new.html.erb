@@ -1,29 +1,103 @@
-<h2>Sign up</h2>
+<h2 class="ui center aligned icon header">
+  <i class="circular users icon green"></i>
+  Steps to Register YourSelf
+</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class="set_step"> 
+<div class="ui ordered steps ">
+  <div class="active step">
+    <div class="content">
+      <div class="title">Sign-up</div>
+      <div class="description">As a Responsible Head</div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+  <div class="active step">
+    <div class="content">
+      <div class="title">Billing</div>
+      <div class="description">Enter billing information</div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  <div class="active step">
+    <div class="content">
+      <div class="title">Account Activate</div>
+      <div class="description">Verify your Account</div>
+    </div>
   </div>
+</div>
+</div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
+
+<%= form_for(User.new, url: user_signup_path) do |f| %>
+<div class="ui placeholder segment">
+  <div class="ui two column very relaxed stackable grid">
+    <div class="column">
+      <div class="ui form">
+
+      <div class="field">
+      <label>Name</label>
+      <div class="two fields">
+        <div class="field">
+          <%= f.text_field :first_name , placeholder:"First Name" %>
+        </div>
+        <div class="field">
+        <%= f.text_field :last_name , placeholder:"Last Name" %>
+        </div>
+      </div>
+      </div>
+      <div class="field">
+          <label>Date of Birth</label>
+          <div class="ui left icon input">
+           <%= f.date_select :dateofbirth  %>
+          </div>
+        </div>
+
+        <div class="field">
+        <label>Country</label>
+        <div class="ui left icon input">
+        <%= f.select :country, ApplicationRecord.countries%>
+        </div>
+      </div>
+
+        <div class="field">
+        <label>Gender</label>
+        <div class="ui left icon input">
+         <%= f.radio_button :gender , 'male' %> Male
+         <%= f.radio_button :gender , 'female' %> Female
+        </div>
+      </div>
+     
+      <div class="field">
+          <label>Email</label>
+          <div class="ui left icon input">
+           <%= f.email_field :email , placeholder: "Enter email address" %>
+            <i class="user icon"></i>
+          </div>
+        </div>
+        <div class="field">
+        <label>Password</label>
+        <div class="two fields">
+          <div class="field">
+            <%= f.password_field :password , placeholder:"Enter Pass" %>
+          </div>
+          <div class="field">
+          <%= f.password_field :password_confirmation , placeholder:"Re-enter Pass" %>
+          </div>
+        </div>
+        </div>
+     
+        <div class="ui blue submit button"><%= f.submit "Sign up" %></div>
+      </div>
+    </div>
+    <% end %>
+    <div class="middle aligned column">
+      <div class="ui big button">
+        <i class="signup icon"></i>
+        <%= link_to "Login" , new_user_session_path %>
+      </div>
+    </div>
   </div>
-<% end %>
+  <div class="ui vertical divider">
+    Or
+  </div>
+</div>
 
-<%= render "devise/shared/links" %>

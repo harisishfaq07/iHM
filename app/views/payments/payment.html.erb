@@ -1,0 +1,121 @@
+<h2 class="ui center aligned icon header">
+  <i class="circular money bill alternate outline icon green"></i>
+  Do Payment to continue...
+</h2><br>
+<div class="set_step"> 
+<div class="ui ordered steps ">
+  <div class="completed step">
+    <div class="content">
+      <div class="title">Sign-up</div>
+      <div class="description">Congratulations!</div>
+    </div>
+  </div>
+  <div class="active step">
+    <div class="content">
+      <div class="title">Billing</div>
+      <div class="description">Enter billing information</div>
+    </div>
+  </div>
+  <div class="active step">
+    <div class="content">
+      <div class="title">Account Activate</div>
+      <div class="description">Verify your Account</div>
+    </div>
+  </div>
+</div>
+</div>
+<br><br>
+
+<%= form_for(@payment, url:  payments_create_payment_path) do |f| %>
+<div class= "ui container">
+    <form class="ui form">
+  <h4 class="ui dividing header">Avaiable Packages</h4>
+  <%= f.hidden_field :user_id, :value => @user.id %>
+
+  <div class="field">
+
+    <div class="fields">
+      <div class="twelve wide field">
+
+    <div class = "ui four cards green">
+      <% Package.all.where(status: 1).each do |p|%>
+        <div class="ui card">
+        <div class="content">
+        <div class="ui header red"><%= p.name %></div>
+        <div class="meta">
+        <label>Contacts Allowed: </label>
+        <span class="ui category green"><strong><%= p.contacts_allowed %></strong></span>
+        </div>
+        <div class="description">
+        <label>Price: </label>
+        <%= p.price %>$
+        </div>
+        <%= f.radio_button :package_no , p.id , class: "package_show#{p.id}" ,:required => true %>
+        </div>
+        </div> 
+      <% end %> 
+    </div>
+ </div>
+    </div>
+  </div>
+  <br><br><br><br><br>
+  <div class="payment_toggle">
+  <h4 class="ui dividing header">Billing Information</h4>
+  <div class = "ui form">
+  <div class="field">
+    <label>Card Type</label>
+      <%= f.select :brand , ["Master card" , "Vise", "Credit Card", "American Express", "Discover"] %>
+  </div>
+  
+  <br>
+
+  <div class="fields">
+    <div class="seven wide field">
+      <label>Card Number</label>
+      <%= f.text_field :card_no , placeholder: "Enter 16-digit card no" %>
+    </div>
+    <div class="three wide field">
+      <label>CVC</label>
+      <%= f.text_field :cvc , placeholder: "Enter 3-digit cvc no" %>
+    </div>
+    <div class="seven wide field">
+      <label>Expiration</label>
+      <div class="two fields">
+         <%= f.date_select :exp_month , order: [:month]%>
+         <%= f.date_select :exp_year , order: [:year]%>
+      </div>
+    </div>
+  </div>
+  </div>
+</form>
+</div>
+<%= f.submit "Proceed" , class:"ui button blue" %>
+<% end %>
+
+</div>
+
+<script>
+$(document).ready(function(){
+    $(".payment_toggle").hide();
+
+    $(".with_package").click(function(){
+        $(".payment_toggle").show();
+    })
+    $(".without_package").click(function(){
+        $(".payment_toggle").hide();
+    })
+
+    $(".package_show1").click(function(){
+        $(".payment_toggle").slideDown();
+    })
+    $(".package_show2").click(function(){
+        $(".payment_toggle").slideDown();
+    })
+    $(".package_show3").click(function(){
+        $(".payment_toggle").slideDown();
+    })
+    $(".package_show4").click(function(){
+        $(".payment_toggle").slideUp();
+    })
+})
+</script>
