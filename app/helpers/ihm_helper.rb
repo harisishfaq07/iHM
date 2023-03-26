@@ -1,0 +1,2 @@
+module IhmHelper
+end
