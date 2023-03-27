@@ -16,9 +16,10 @@ class PaymentsController < ApplicationController
     @payment.exp_month = params[:payment]["exp_month(2i)"]
     @payment.exp_year = params[:payment]["exp_year(1i)"]
     @payment.brand = params[:payment]["brand"]
-    
+
     if @payment.save
-      if @payment.user.status == 0
+      UserPackage.create(user_id: @payment.user.id, package_id: @payment.package_no)
+      if @payment.user.status == 0 
          random_string = SecureRandom.hex(8)
          @payment.user.update(active_token: random_string, payment: 1)
          UserMailer.activate_account(@payment.user,random_string).deliver_later
