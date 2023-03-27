@@ -54,7 +54,7 @@
         <div class="field">
         <label>Country</label>
         <div class="ui left icon input">
-        <%= f.select :country, ApplicationRecord.countries%>
+        <%= f.select :country, ["Pakistan" , "United States"]%>
         </div>
       </div>
 
@@ -80,12 +80,12 @@
             <%= f.password_field :password , placeholder:"Enter Pass" %>
           </div>
           <div class="field">
-          <%= f.password_field :password_confirmation , placeholder:"Re-enter Pass" %>
+          <%= f.password_field :password_confirmation , placeholder:"Re-enter" %>
           </div>
         </div>
         </div>
      
-        <div class="ui blue submit button"><%= f.submit "Sign up" %></div>
+        <%= f.submit "Signup" , class:"ui blue submit button"%>
       </div>
     </div>
     <% end %>

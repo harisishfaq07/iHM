@@ -1,0 +1,25 @@
+<br><br><br><br><br>
+<div class="ui container">
+<p class="link_center"><strong>New Package</strong></p>
+<div class="ui form">
+<%= form_for(Package.new, url: packages_path , method: :post) do |p| %>
+  <div class="field">
+    <label>Name</label>
+    <%= p.text_field :name , placeholder: "Enter package name"%>
+  </div>
+  <div class="field">
+    <label>Contacts Allowed</label>
+    <%= p.number_field :contacts_allowed , placeholder: "Enter no of contacts allowed"%>
+  </div>
+  <div class="field">
+  <label>Price</label>
+  <%= p.number_field :price , placeholder: "Enter no of contacts allowed"%>
+</div>
+<%= p.submit "Create" , class:"ui button blue"%>
+<% end %>
+
+<br>
+<%= link_to "Back" , :back %>
+</div>
+
+</div>

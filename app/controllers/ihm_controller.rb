@@ -3,4 +3,6 @@ class IhmController < ApplicationController
         # homepage-view
     end
 
+    def dashboard
+    end
 end

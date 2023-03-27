@@ -1,0 +1,65 @@
+
+<div class="ui container">
+<br><br><br>
+
+<div class="link_right">
+<i class="icon cloud download"></i>
+<%=
+  link_to 'Download Packages',
+  packages_path(format: :xlsx)
+%>
+</div>
+<div class="link_center"><strong>All Packages</strong></div>
+<table class="ui compact celled definition table">
+  <thead>
+    <tr>
+      <th>Publish</th>
+      <th>Name</th>
+      <th>Contacts Allowed</th>
+      <th>Price</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @packages.each do |p| %>
+    <tr>
+      <td class="collapsing">
+      <% if p.status == 1 %>
+        <div class="link_center">   <i class="icon check green"></i> </div>
+        <% else %>
+        <div class="link_center"> <i class="icon x icon red"></i></div>
+        <% end %>
+      </td>
+      <td><%=p.name%></td>
+      <td><%=p.contacts_allowed%></td>
+      <td><%=p.price%>$</td>
+      <td>
+         <div class="inline"><%= link_to "Edit" , edit_package_path(p.id) %> 
+      </td>
+      <td>
+         <%= button_to "Delete" , package_path(p.id) , method: :delete , class:"delete" %></div>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+  <tfoot class="full-width">
+    <tr>
+      <th></th>
+      <th colspan="4">
+        <div class="ui right floated small labeled icon button">
+          <i class="user icon"></i> <%= link_to "Add new package" , new_package_path %>
+        </div>
+        <div class="ui small button">
+          <%= link_to "Back" , :back %>
+        </div>
+      </th>
+    </tr>
+  </tfoot>
+</table>
+</div>
+
+
+<script>
+
+</script>
