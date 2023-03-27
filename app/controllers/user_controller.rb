@@ -1,4 +1,6 @@
 class UserController < ApplicationController
+  before_action :authenticate_user! , except: [:signup, :activate_account, :do_activate_account, :regenerate_active_token]
+
   require 'securerandom'
   def signup
     @user = User.find_by_email(params[:user]["email"])

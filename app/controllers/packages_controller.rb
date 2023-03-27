@@ -1,5 +1,5 @@
 class PackagesController < ApplicationController
-
+    before_action :authenticate_user!
     def index
         @packages = Package.all 
         respond_to do |format|
