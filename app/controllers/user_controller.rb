@@ -2,6 +2,32 @@ class UserController < ApplicationController
   before_action :authenticate_user! , except: [:signup, :activate_account, :do_activate_account, :regenerate_active_token]
 
   require 'securerandom'
+
+  def new_user
+      @user = User.new()
+      @approved = User.all.where(status: 1).count
+      @notapproved = User.all.where(status: 0).count
+      @notpaid = User.all.where(payment: 0).count
+      @paid = User.all.where(payment: 1).count
+      @all = User.paginate(:page => params[:page], :per_page => 10)
+      @q = @all.ransack(params[:q])
+      @all_users = @q.result(distinct: true)
+  
+  end
+
+  def create_new_user
+    password = random_string = SecureRandom.hex(6)
+    @user = User.new(email: params[:user]["email"], password: password)
+    if @user.save
+      UserMailer.add_user(@user, password).deliver_later
+      flash.notice = "USer created Successfully!"
+      redirect_to user_create_new_user_path
+    else
+      flash.alert = "Try again!"
+      render 'new_user'
+    end
+  end
+
   def signup
     @user = User.find_by_email(params[:user]["email"])
     if @user.present?
@@ -67,10 +93,64 @@ class UserController < ApplicationController
     UserMailer.activate_account(@user,random_string).deliver_later
     flash.notice = "Your token is regenerated kindly check your email!"
     redirect_to user_activate_account_path(id: @user.id)
- else
-   flash.alert = "Please try again!"
-   redirect_to new_user_session_path
- end
+    else
+      flash.alert = "Please try again!"
+      redirect_to new_user_session_path
+    end
   
+  end
+
+  def send_regenerate_active_token_email
+    # debugger
+    @user = User.find(params[:id])
+ 
+    if @user.status == 0
+     random_string = SecureRandom.hex(8)
+     @user.update(active_token: random_string)
+     UserMailer.send_activate_account(@user,random_string).deliver_later
+     flash.notice = "Your token is regenerated kindly check your email!"
+    #  redirect_to user_activate_account_path(id: @user.id)
+     else
+       flash.alert = "Please try again!"
+       redirect_to new_user_session_path
+     end
+   
+   end
+
+  def verified_users
+     @users = User.all.where(payment:1, status:1)
+     respond_to do |format|
+      format.xlsx {}
+      format.html {}
+     end
+  end
+
+  def view_user
+     @user = User.find(params[:id])
+  end
+
+  def unapproved_users
+    @users = User.all.where(status: 0)
+  end
+
+  def unpaid_users
+    @users = User.all.where(payment: 0)
+  end
+
+  def delete_user
+    @user = User.find(params[:id])
+    if @user.payment == 1
+      flash.alert = "This User is active with Payment, Can't be delete"
+      redirect_to user_new_user_path 
+    else
+
+      if @user.destroy
+        flash.notice = "Deleted Successfully"
+        redirect_to user_new_user_path 
+      else
+        flash.alert = "try again!"
+        redirect_to user_new_user_path
+      end
+    end
   end
 end

@@ -18,7 +18,7 @@ before_action :authenticate_user!
         if @user.payment == 0
             UserMailer.payment_reminder(@user).deliver_later
                       flash.notice = "Reminder Sent"
-                      redirect_to payments_track_up_coming_payments_path
+                    #   redirect_to payments_track_up_coming_payments_path
         end
     end
 end

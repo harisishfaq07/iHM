@@ -31,6 +31,7 @@ class PaymentsController < ApplicationController
               @payment.status = 1
                 if @payment.save
                   UserPackage.create(user_id: @payment.user.id, package_id: @payment.package_no)
+                  @user.update(payment_date: Time.now.strftime("%d-%M-%Y"))
                     if @payment.user.status == 0 
                       random_string = SecureRandom.hex(8)
                       @payment.user.update(active_token: random_string, payment: 1)

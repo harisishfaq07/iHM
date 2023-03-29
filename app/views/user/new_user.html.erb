@@ -1,0 +1,123 @@
+<br><br><br><br><br>
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+
+
+
+
+<p class="link_center"><strong>Add New User</strong></p>
+<div class="ui form">
+<%= form_for(User.new , url: user_create_new_user_path , method: :post) do |p| %>
+  <div class="field">
+    <label>Email</label>
+    <%= p.text_field :email , placeholder: "Enter user email"%>
+  </div>
+<%= p.submit "Create" , class:"ui button blue"%>
+<% end %>
+
+<br>
+<%= link_to "Back" , :back %>
+</div>
+<hr>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div class="ui container">
+<br><br><br>
+
+
+<div class="ui container">
+<%= pie_chart [["Approved User" , @approved] , ["Unapproved User" , @notapproved] , ["Paid User" , @paid] , ["Not Paid User", @notpaid]] %>
+</div>
+
+
+<br><br><br><br>
+<div class="link_right">
+
+  <%= search_form_for(@q, url: user_new_user_path) do |f| %>
+  <%= f.search_field :email , placeholder: "Search by email"%>
+  <%= f.submit %>
+<% end %>
+</div>
+<div class="link_center"><strong>All Users</strong></div>
+<table class="ui compact celled definition table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Email</th>
+      <th>Payment</th>
+      <th>Approved</th>
+      <th>Show</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @all_users.each do |p| %>
+    <tr>
+      <td class="collapsing">
+      <%= p.id %>
+      </td>
+      <td><%=p.email%></td>
+      <% if p.payment == 1 %>
+          <td><i class="icon check green"></i></td>
+      <% else %>
+          <td><i class="icon x icon red"></i></td>
+      <% end %>
+      <% if p.status == 1 %>
+          <td><i class="icon check green"></i></td>
+      <% else %>
+          <td><i class="icon x icon red"></i></td>
+      <% end %>
+      <td>
+         <div class="inline"><%= link_to "Show" , user_view_user_path(id: p.id) %> 
+      </td>
+      <td>
+         <%= button_to "Delete" , user_delete_user_path(id: p.id) , method: :delete %></div>
+      </td>
+    </tr>
+    <% end %>
+   <div class="digg_pagination">
+    <%= will_paginate @all_users, :container => false %>
+
+  </div>
+  <div class="page_info">
+  <%= page_entries_info @all_users %>
+</div>
+
+    </tbody>
+  <tfoot class="full-width">
+    <tr>
+      <th></th>
+      <th colspan="4">
+        <div class="ui small button">
+          <%= link_to "Back" , :back %>
+        </div>
+      </th>
+    </tr>
+  </tfoot>
+</table>
+
+</div>
+
+
+<script>
+
+</script>
+
