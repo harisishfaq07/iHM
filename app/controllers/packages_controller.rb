@@ -3,11 +3,7 @@ class PackagesController < ApplicationController
     def index
         @packages = Package.all 
         respond_to do |format|
-            format.xlsx {
-            #   response.headers[
-            #     'Content-Disposition'
-            #   ] = "attachment; filename='packages.xlsx'"
-            }
+            format.xlsx { }
             format.html { }
           end
     end

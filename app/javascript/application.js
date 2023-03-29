@@ -6,3 +6,29 @@ import "Chart.bundle"
 //= require semantic-ui
 //= require semantic-ui/modal
 //= require semantic-ui/dropdown
+
+
+$(document).ready(function(){
+    $(".pk").hide();
+    $(".pk2").click(function(){
+        $(".pk").show();
+        $(".pk2").hide();
+    });
+
+    $(".pk").click(function(){
+        $(".pk").hide();
+        $(".pk2").show();
+    });
+
+    $(".sk").hide();
+    $(".sk2").click(function(){
+        $(".sk").show();
+        $(".sk2").hide();
+    });
+
+    $(".sk").click(function(){
+        $(".sk").hide();
+        $(".sk2").show();
+    });
+
+})

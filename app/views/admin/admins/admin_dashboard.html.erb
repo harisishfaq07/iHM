@@ -26,14 +26,20 @@
                     <li><%= link_to "Create new package" , new_package_path %></li>
                     <li><%= link_to "List of Packages" , packages_path %></li>
                 </ul>
-
+                <li data-toggle="collapse" data-target="#stripe" class="collapsed">
+                <a><i class="icon money bill alternate outline"></i> Stripe Account <span class="arrow"></span></a>
+              </li>  
+              <ul class="sub-menu collapse" id="stripe">
+              <li><%= link_to "Create new account" , new_stripe_account_path %></li>
+              <li><%= link_to "List of accounts" , stripe_accounts_path %></li>
+              </ul>
 
                 <li data-toggle="collapse" data-target="#service" class="collapsed">
                   <a><i class="icon money bill alternate outline"></i> Payments <span class="arrow"></span></a>
                 </li>  
                 <ul class="sub-menu collapse" id="service">
-                  <li>Total Payments</li>
-                  <li>Upcoming Payment</li>
+                  <li><%= link_to "Total Payments" , payments_track_all_payments_path %></li>
+                  <li><%= link_to "Upcoming Payments" , payments_track_up_coming_payments_path %></li>
                   <li>Payment Track</li>
                 </ul>
 
@@ -81,7 +87,6 @@
                   <i class="fa fa-user fa-lg"></i> Profile
                   </a>
                 </li>
-
                 <li>
                 <a>
                 <i class="icon bell"></i> Notifications

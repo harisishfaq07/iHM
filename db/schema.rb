@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_27_182602) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_29_010114) do
   create_table "packages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.integer "contacts_allowed"
@@ -23,11 +23,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_182602) do
   create_table "payments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
     t.integer "package_no"
-    t.bigint "card_no"
+    t.string "card_no"
     t.integer "cvc"
     t.string "brand"
     t.string "exp_month"
     t.string "exp_year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "status", default: 0
+  end
+
+  create_table "stripe_accounts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "p_key"
+    t.string "s_key"
+    t.string "email"
+    t.integer "status", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

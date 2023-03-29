@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   end
 
   resources :packages 
+  resources :stripe_accounts
   post 'packages/create_package'
   post 'packages/export_package'
 
@@ -22,6 +23,11 @@ Rails.application.routes.draw do
   post 'user/regenerate_active_token'
   get 'user/activate_account'
   post 'payments/create_payment'
+
+  get 'payments_track/all_payments'
+  get 'payments_track/up_coming_payments'
+  post 'payments_track/send_payment_reminder'
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
