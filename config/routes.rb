@@ -1,4 +1,7 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
+  mount Sidekiq::Web => "/sidekiq"
+
   root "ihm#homepage"
   
   devise_for :users, controllers: {sessions: 'sessions'}
@@ -20,6 +23,7 @@ Rails.application.routes.draw do
   get 'payments/payment'
   get 'ihm/dashboard'
   get 'user/new_user'
+  get 'user/locked_user'
   post 'user/create_new_user'
   delete 'user/delete_user'
   post 'user/signup'

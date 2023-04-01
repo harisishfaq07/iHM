@@ -3,6 +3,12 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <div class="container emp-profile">
+<% if @user.lockable.present? %>
+<div class="ui container">
+<p class="ui block header link_center inverted red"><strong><i class="icon circle orange"></i>Warning: This account is locked due to <%= @user.lockable.reason %></strong></p>
+</div>
+<% end %>
+<br><br>
             <form method="post">
                 <div class="row">
                     <div class="col-md-4">

@@ -89,3 +89,5 @@ gem 'stripe'
 gem "will_paginate", "~> 3.3"
 
 gem "ransack", "~> 4.0"
+
+gem "sidekiq", "~> 7.0"

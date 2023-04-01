@@ -15,6 +15,7 @@
       <th>Name</th>
       <th>Email</th>
       <th>Payment</th>
+      <th>Status</th>
       <th>Notify</th>
       <th>Show</th>
     </tr>
@@ -33,6 +34,13 @@
       <% else %>
       <td><i class="icon x icon red"></i></td>
       <% end %>
+
+      <% if p.status == 1 %>
+      <td><i class="icon check green"></i></td>
+      <% else %>
+      <td><i class="icon x icon red"></i></td>
+      <% end %>
+
 
       <% if p.payment == 1 %>
       <td><%= button_to "Notify user" , user_send_regenerate_active_token_email_path(id: p.id) %></td>

@@ -3,7 +3,7 @@ class UserController < ApplicationController
 
   require 'securerandom'
 
-  def new_user
+  def new_user #get
       @user = User.new()
       @approved = User.all.where(status: 1).count
       @notapproved = User.all.where(status: 0).count
@@ -12,10 +12,9 @@ class UserController < ApplicationController
       @all = User.paginate(:page => params[:page], :per_page => 10)
       @q = @all.ransack(params[:q])
       @all_users = @q.result(distinct: true)
-  
   end
 
-  def create_new_user
+  def create_new_user #post
     password = random_string = SecureRandom.hex(6)
     @user = User.new(email: params[:user]["email"], password: password)
     if @user.save
@@ -28,7 +27,7 @@ class UserController < ApplicationController
     end
   end
 
-  def signup
+  def signup #post
     @user = User.find_by_email(params[:user]["email"])
     if @user.present?
     if @user.payment == 0 
@@ -59,12 +58,12 @@ class UserController < ApplicationController
   end
 
 
-  def activate_account
+  def activate_account #get
     @error = 0
     @user = User.find(params[:id])
   end
 
-  def do_activate_account
+  def do_activate_account #post
     @user = User.find(params[:user]["id"])
     if @user.status == 0
     if @user.active_token == params[:user]["active_token"]
@@ -101,7 +100,6 @@ class UserController < ApplicationController
   end
 
   def send_regenerate_active_token_email
-    # debugger
     @user = User.find(params[:id])
  
     if @user.status == 0
@@ -152,5 +150,9 @@ class UserController < ApplicationController
         redirect_to user_new_user_path
       end
     end
+  end
+
+  def locked_user
+     @users = User.joins(:lockable)
   end
 end

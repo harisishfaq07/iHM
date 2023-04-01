@@ -2,6 +2,10 @@ class SessionsController < Devise::SessionsController
 
     def login
         @user = User.find_by_email(params[:user]["email"])
+        if @user.lockable.present?
+            flash.alert = "Your account is locked due to #{@user.lockable.reason}"
+            redirect_to payments_payment_path(id: @user.id)
+        else
         if @user.present? && @user.valid_password?(params[:user]["password"])
         if @user.payment == 0
             flash.alert = "Please do your payment to continue..." 
@@ -24,6 +28,7 @@ class SessionsController < Devise::SessionsController
         else
                 flash.alert = "Invalid email/password"
         end
+    end
     end
 
 

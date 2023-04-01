@@ -1,0 +1,44 @@
+<div class="ui container">
+<br><br><br>
+
+<div class="link_center"><strong>Total Locked Users: <%= @users.count %></strong></div>
+<table class="ui compact celled definition table">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Reason</th>
+      <th>Unlock</th>
+      <th>Show</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @users.each do |p| %>
+    <tr>
+      <td><%=p.email%></td>
+     <td><%= p.lockable.reason %></td>
+
+     <td>unlock</td>
+
+
+      <td><%= link_to "Show" , user_view_user_path(id: p.id) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+  <tfoot class="full-width">
+    <tr>
+      <th></th>
+      <th colspan="4">
+       
+        <div class="ui small button">
+          <%= link_to "Back" , :back %>
+        </div>
+      </th>
+    </tr>
+  </tfoot>
+</table>
+</div>
+
+
+<script>
+
+</script>
