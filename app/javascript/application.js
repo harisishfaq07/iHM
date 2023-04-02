@@ -32,3 +32,12 @@ $(document).ready(function(){
     });
 
 })
+
+
+
+
+$(document).ready(function(){
+    $(".pass").click(function(){
+        alert("ko");
+    })
+})

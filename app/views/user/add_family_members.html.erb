@@ -1,0 +1,129 @@
+<br><br><br><br><br>
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+
+
+
+<p class="link_center click_to_add "><strong>Add New User</strong></p>
+<div class="add_member">
+<div class="ui form">
+<%= form_for(FamilyMember.new , url: user_do_add_family_members_path , method: :post) do |p| %>
+  <div class="field">
+    <label>Name</label>
+    <%= p.text_field :name , placeholder: "Enter member name"%>
+  </div>
+
+  <div class="field">
+    <label>Email</label>
+    <%= p.text_field :email , placeholder: "Enter user email" , :required => true%>
+  </div>
+
+  <div class="field">
+    <label>Gender</label>
+    <%= p.select :gender , ["male" , "female" , "other"]%>
+  </div>
+
+  <div class="field">
+    <label>Role</label>
+    <%= p.select :role , ["Wife" , "Husband" ,  "Son" , "Daughter"]%>
+  </div>
+
+  <div class="field">
+    <label>Password</label>
+    <%= p.text_field :password , placeholder: "Enter Password" , :required => true%>
+  </div>
+<%= p.submit "Create" , class:"ui button blue"%>
+<% end %>
+
+<br>
+<%= link_to "Back" , :back %>
+</div>
+<hr>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div class="ui container">
+<br><br><br>
+
+<br><br><br><br>
+<div class="link_right">
+
+</div>
+
+<div class="link_center"><strong>All Members</strong></div>
+<table class="ui compact celled definition table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Gender</th>
+      <th>Relation</th>
+      <th>Show</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  <% @members&.each do |p| %>
+    <tr>
+      <td class="collapsing">
+      <%= p.id %>
+      </td>
+      <td><%=p.name%></td>
+      <td><%=p.email%></td>
+      <td><%=p.gender%></td>
+      <td><%=p.role%></td>
+      <td>
+         <div class="inline"><%= link_to "Show" , user_view_member_path(id: p.id) %> 
+      </td>
+      <td>
+         <%= button_to "Delete" , user_delete_user_path(id: p.id) , method: :delete %></div>
+      </td>
+    </tr>
+    <% end %>
+
+    </tbody>
+  <tfoot class="full-width">
+    <tr>
+      <th></th>
+      <th colspan="4">
+        <div class="ui small button">
+          <%= link_to "Back" , :back %>
+        </div>
+      </th>
+    </tr>
+  </tfoot>
+</table>
+
+
+</div>
+
+
+<script>
+
+$(document).ready(function(){
+    $(".add_member").hide();
+    $(".click_to_add").click(function(){
+        $(".add_member").slideDown();
+    })
+})
+</script>
+

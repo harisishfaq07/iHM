@@ -29,14 +29,14 @@ class UserController < ApplicationController
 
   def signup #post
     @user = User.find_by_email(params[:user]["email"])
-    if @user.present?
-    if @user.payment == 0 
+    if @user.present? 
+    if @user.payment == 0 && @user.parent_id == 0
         flash[:alert] = "Users already registered, Please complete your payment!"
         redirect_to payments_payment_path(id: @user.id)
-    elsif @user.status == 0
+    elsif @user.status == 0 && @user.parent_id == 0
       flash[:alert] = "Users already registered and payment is already done, Please activate your account!"
       regenerate_token(@user.id)
-    elsif @user.status == 1 && @user.payment == 1
+    elsif @user.status == 1 && @user.payment == 1 
       flash[:notice] = "Your account is already setup, you can login now!"
       redirect_to new_user_session_path
     end
@@ -155,4 +155,90 @@ class UserController < ApplicationController
   def locked_user
      @users = User.joins(:lockable)
   end
+
+
+
+  def edit_profile #get
+    @user = current_user
+  end
+
+  def do_edit_profile #post
+   if params[:user]["new_password"].present? && params[:user]["confirm_password"].present?
+      if current_user.valid_password?(params[:user]["password"])
+          if params[:user]["new_password"] == params[:user]["confirm_password"]
+            current_user.update(password: params[:user]["new_password"])
+            flash.alert = "Password update Successfully"
+            redirect_to user_view_user_path(id: current_user.id)
+          else
+            flash.alert = "New password Not same. Try again!"
+            redirect_to user_view_user_path(id: current_user.id)
+          end
+        else
+          flash.alert = "Invalid old Password"
+          redirect_to user_view_user_path(id: current_user.id)
+        end
+   else
+
+   if current_user.update(first_name: params[:user]["first_name"] , last_name: params[:user][:last_name],
+                         gender: params[:user]["gender"], country: params[:user]["country"], 
+                         dateofbirth: params[:user]["dateofbirth"]
+                         )
+                         flash.notice = "Profile Updated Successfully!"
+                         redirect_to user_view_user_path(id: current_user.id)
+   else
+    flash.alert = "Please try again!"
+    render 'edit_profile'
+   end
+  end    
+  end
+
+
+  def register_family #get
+    @family = Family.new
+    if current_user.family.present?
+       redirect_to user_add_family_members_path
+    end
+  end
+
+  def do_family_register #post
+      if Family.create(family_name: params[:family]["family_name"], no_of_members: params[:family]["no_of_members"], user_id: current_user.id)
+        flash.notice = "Family registered Successfully"
+        redirect_to user_add_family_members_path
+      else
+        flash.alert = "Error Try again!" 
+        render 'register_family'
+      end
+  end
+  def add_family_members
+    @members = FamilyMember.where(family_id: current_user.family.id).joins(:family)
+  end
+
+  def do_add_family_members
+    if User.no_of_family_members(current_user) < User.allowed_members(current_user) 
+      find_dup = User.find_by_email(params[:family_member]["email"])
+      if !find_dup.present?
+        if @member = FamilyMember.create(name: params[:family_member]["name"], email: params[:family_member]["email"],
+                              gender: params[:family_member]["gender"], role: params[:family_member]["role"], 
+                              password: params[:family_member]["password"], family_id: current_user.family.id)
+            User.create(first_name: @member.name, email: @member.email, gender: @member.gender, password: @member.password, parent_id: current_user.id)
+                              flash.notice = "#{@member.name} Add Successfully"
+                              redirect_to user_add_family_members_path
+        end
+      else
+        flash.alert = "Email already Registered"
+        redirect_to user_add_family_members_path
+      end
+     
+    else
+      flash.alert = "Your members limit is full. upgrade your account to create more"
+    end
+  end
+
+
+
+
+  def view_member
+    @member = FamilyMember.find(params[:id])
+  end
+
 end
