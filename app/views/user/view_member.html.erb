@@ -40,7 +40,7 @@
 </div>
 <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
 <div class="d-flex justify-content-between">
-<a href="#" class="btn btn-sm btn-info mr-4">View Schedule</a>
+<%= link_to "View Schedule" , tasks_user_schedule_path(id: @member.id), class:"btn btn-sm btn-info mr-4" %>
 <a href="#" class="btn btn-sm btn-default float-right">Message</a>
 </div>
 </div>
@@ -49,7 +49,7 @@
 <div class="col">
 <div class="card-profile-stats d-flex justify-content-center mt-md-5">
 <div>
-<span class="heading">22</span>
+<span class="heading"> 1 </span>
 <span class="description">Today Task</span>
 </div>
 <div>

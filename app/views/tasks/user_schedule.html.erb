@@ -1,0 +1,39 @@
+<div class="ui container">
+
+
+
+<div class="link_center"><strong>Schedule Tasks</strong></div>
+<table class="ui compact celled definition table">
+  <thead>
+    <tr>
+      
+      <th>Task Name</th>
+      <th>Description</th>
+      <th>Dead Day</th>
+      <th>Dead Time</th>
+      <th>Status</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  <% @tasks&.each do |p| %>
+    <tr>
+      <td class="collapsing">
+      <%= p.task_name %>
+      </td>
+      <td><%=p.task_desc%></td>
+      <td><%=p.dead_day%></td>
+      <td><%=p.dead_time%></td>
+      <td><%=p.status%></td>
+      <% if !p.assign_to.present? %>
+      <td>Edit to</td>
+      <td>Delete</td>
+      <% end %>
+    </tr>
+    <% end %>
+
+    </tbody>
+
+</div>

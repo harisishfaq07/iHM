@@ -42,6 +42,13 @@ Rails.application.routes.draw do
   get 'user/unapproved_users'
   get 'user/unpaid_users'
   post 'user/send_regenerate_active_token_email'
+
+
+get 'tasks/new'
+post 'tasks/create'
+get 'tasks/user_schedule'
+
+
   post 'payments/create_payment'
 
   get 'payments_track/all_payments'

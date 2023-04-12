@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_02_164727) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_02_225405) do
   create_table "families", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "family_name"
     t.string "no_of_members"
@@ -71,10 +71,32 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_02_164727) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tasks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "task_name"
+    t.string "task_desc"
+    t.integer "status", default: 1
+    t.boolean "archieved", default: false
+    t.integer "user_id"
+    t.integer "member_id"
+    t.string "assign_to"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "dead_time"
+    t.datetime "dead_day"
+  end
+
   create_table "user_packages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
     t.integer "package_id"
     t.integer "status", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_tasks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "task_id"
+    t.integer "has_parent", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

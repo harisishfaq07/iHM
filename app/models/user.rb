@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :user_packages , dependent: :destroy
   has_one :lockable , dependent: :destroy
   has_one :family , dependent: :destroy
+  has_many :tasks , dependent: :destroy
 # Validations
 validates :email, uniqueness: true
 

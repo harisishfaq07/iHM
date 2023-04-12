@@ -1,0 +1,127 @@
+<br><br><br><br><br>
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+<div class="ui container">
+
+
+
+<p class="link_center click_to_add "><strong>Add New Task</strong></p>
+<div class="add_member">
+<div class="ui form">
+<%= form_for(@task , url: tasks_create_path , method: :post) do |p| %>
+  <div class="field">
+    <label>Name</label>
+    <%= p.text_field :task_name , placeholder: "Enter member name"%>
+  </div>
+
+  <div class="field">
+    <label>Description</label>
+    <%= p.text_field :task_desc , placeholder: "Enter user email" , :required => true%>
+  </div>
+
+
+  <label>Dead Time</label>
+   
+  <%= p.time_select  :dead_time %>
+<br>
+  <label>Dead Day</label>
+ 
+  <%= p.date_select :dead_day %>
+<br>
+<% if current_user.parent_id == 0 %>
+  <div class="field">
+    <label>Assign_to</label>
+    <%= p.select :assign_to , @members.collect { |m| [m.email, m.id] } , :include_blank => true %>
+  </div>
+<% end %>
+<%= p.submit "Create" , class:"ui button blue"%>
+<% end %>
+
+<br>
+<%= link_to "Back" , :back %>
+</div>
+<hr>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div class="ui container">
+<br><br><br>
+
+<br><br><br><br>
+<div class="link_right">
+
+</div>
+
+<div class="link_center"><strong>All Tasks</strong></div>
+<table class="ui compact celled definition table">
+  <thead>
+    <tr>
+      
+      <th>Task Name</th>
+      <th>Description</th>
+      <th>Dead Day</th>
+      <th>Dead Time</th>
+      <th>Status</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  <% @tasks&.each do |p| %>
+    <tr>
+      <td class="collapsing">
+      <%= p.task_name %>
+      </td>
+      <td><%=p.task_desc%></td>
+      <td><%=p.dead_day%></td>
+      <td><%=p.dead_time%></td>
+      <td><%=p.status%></td>
+      <td>Edit to</td>
+      <td>Delete</td>
+    </tr>
+    <% end %>
+
+    </tbody>
+  <tfoot class="full-width">
+    <tr>
+      <th></th>
+      <th colspan="4">
+        <div class="ui small button">
+          <%= link_to "Back" , :back %>
+        </div>
+      </th>
+    </tr>
+  </tfoot>
+</table>
+
+
+</div>
+
+
+<script>
+
+$(document).ready(function(){
+    $(".add_member").hide();
+    $(".click_to_add").click(function(){
+        $(".add_member").slideDown();
+    })
+})
+</script>
+
