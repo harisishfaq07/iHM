@@ -4,3 +4,4 @@
 //= link_tree ../../../vendor/javascript .js
 //= link family.mp4
 //= link video.mp4
+//= link vid.mp4

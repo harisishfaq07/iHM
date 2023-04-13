@@ -1,0 +1,53 @@
+
+<div class="ui container">
+<br><br><br>
+
+<div class="link_right">
+<i class="icon cloud download"></i>
+<%=
+  link_to 'Download Payments',
+  payments_track_all_payments_path(format: :xlsx)
+%>
+</div>
+<div class="link_center"><strong>All Payments</strong></div>
+<table class="ui compact celled definition table">
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>User</th>
+      <th>Package Bought</th>
+      <th>Price</th>
+      <th>Created at</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @payments.each do |p| %>
+    <tr>
+      <td class="collapsing">
+      <% if p.status == 1 %>
+        <div class="link_center">   <i class="icon check green"></i> </div>
+        <% else %>
+        <div class="link_center"> <i class="icon x icon red"></i></div>
+        <% end %>
+      </td>
+      <% user = User.find(p.user_id).email %>
+      <td><%= user %></td>
+      <% package = Package.find(p.package_no) %>
+      <td><%= package.name %></td>
+      <td><%= package.price %>$</td>
+      <td><%= p.created_at.strftime("%d/%m/%Y") %></td>
+    </tr>
+    <% end %>
+  </tbody>
+  <tfoot class="full-width">
+    <tr>
+      <th></th>
+      <th colspan="4">
+        <div class="ui small button">
+          <%= link_to "Back" , :back %>
+        </div>
+      </th>
+    </tr>
+  </tfoot>
+</table>
+</div>

@@ -10,7 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_26_113404) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_13_151923) do
+  create_table "families", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "family_name"
+    t.string "no_of_members"
+    t.integer "status", default: 1
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "family_members", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "role"
+    t.string "gender"
+    t.string "email"
+    t.string "password"
+    t.integer "status", default: 1
+    t.integer "family_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "lockables", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "status", default: 0
+    t.string "reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "packages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.integer "contacts_allowed"
@@ -23,11 +52,51 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_26_113404) do
   create_table "payments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id"
     t.integer "package_no"
-    t.bigint "card_no"
+    t.string "card_no"
     t.integer "cvc"
     t.string "brand"
     t.string "exp_month"
     t.string "exp_year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "status", default: 0
+  end
+
+  create_table "stripe_accounts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "p_key"
+    t.string "s_key"
+    t.string "email"
+    t.integer "status", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tasks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "task_name"
+    t.string "task_desc"
+    t.integer "status", default: 1
+    t.boolean "archieved", default: false
+    t.integer "user_id"
+    t.integer "member_id"
+    t.string "assign_to"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "dead_time"
+    t.datetime "dead_day"
+  end
+
+  create_table "user_packages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "package_id"
+    t.integer "status", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_tasks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "task_id"
+    t.integer "has_parent", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -49,6 +118,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_26_113404) do
     t.integer "status", default: 0
     t.string "active_token", default: ""
     t.integer "payment", default: 0
+    t.integer "admin", default: 0
+    t.string "payment_date", default: ""
+    t.integer "locked", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -1,0 +1,116 @@
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="ui grid">
+<div class="three wide column ">
+<div class="nav-side-menu">
+    <div class="brand"><i class="icon home red"></i><%= link_to "iHouseManagement" , root_path %></div>
+  
+        <div class="menu-list">
+            
+            <ul id="menu-content" class="menu-content collapse out">
+                <li>
+                  <a>
+                  <i class="fa fa-dashboard fa-lg"></i> <%= link_to "Dashboard" , admin_dashboard_path %>
+                  </a>
+                </li>
+
+                <li  data-toggle="collapse" data-target="#products" class="collapsed active">
+                  <a><i class="fa fa-gift fa-lg"></i> Packages <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="products">
+                    <li><%= link_to "Create new package" , new_package_path %></li>
+                    <li><%= link_to "List of Packages" , packages_path %></li>
+                </ul>
+                <li data-toggle="collapse" data-target="#stripe" class="collapsed">
+                <a><i class="icon money bill alternate outline"></i> Stripe Account <span class="arrow"></span></a>
+              </li>  
+              <ul class="sub-menu collapse" id="stripe">
+              <li><%= link_to "Create new account" , new_stripe_account_path %></li>
+              <li><%= link_to "List of accounts" , stripe_accounts_path %></li>
+              </ul>
+
+                <li data-toggle="collapse" data-target="#service" class="collapsed">
+                  <a><i class="icon money bill alternate outline"></i> Payments <span class="arrow"></span></a>
+                </li>  
+                <ul class="sub-menu collapse" id="service">
+                  <li><%= link_to "Total Payments" , payments_track_all_payments_path %></li>
+                  <li><%= link_to "Upcoming Payments" , payments_track_up_coming_payments_path %></li>
+                  <li>Payment Track</li>
+                </ul>
+
+
+                <li data-toggle="collapse" data-target="#new" class="collapsed">
+                  <a><i class="icon users"></i> Users <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="new">
+                  <li><%= link_to "Add new user" , user_new_user_path %></li>
+                  <li><%= link_to "List of verified users" , user_verified_users_path %></li>
+                  <li><%= link_to "List of unapproved users" , user_unapproved_users_path %></li>
+                  <li><%= link_to "List of unpaid users" , user_unpaid_users_path %></li>
+                  <li><%= link_to "List of locked users" ,  user_locked_user_path %></li>
+                </ul>
+               
+                <li data-toggle="collapse" data-target="#admin" class="collapsed">
+                <a><i class="icon users"></i> Admins <span class="arrow"></span></a>
+              </li>
+              <ul class="sub-menu collapse" id="admin">
+                <li>Create new admin</li>
+                <li>List of Admins</li>
+              </ul>
+                 <li data-toggle="collapse" data-target="#detailsCollapse" class="collapsed">
+                  <a>
+                     <i class="icon envelope"></i> Email <span class="arrow"></span>
+                  </a>
+                  </li>
+                  <ul class="sub-menu collapse" id="detailsCollapse">
+                      <li>Send Email</li>
+                      <li>List of Email</li>
+                  </ul>
+
+                  <li data-toggle="collapse" data-target="#news" class="collapsed">
+                  <a>
+                     <i class="icon newspaper"></i> News <span class="arrow"></span>
+                  </a>
+                  </li>
+                  <ul class="sub-menu collapse" id="news">
+                      <li>Create News</li>
+                      <li>Archived News</li>
+                      <li>List of all news</li>
+                  </ul>
+
+                 <li>
+                  <a>
+                  <i class="fa fa-user fa-lg"></i> Profile
+                  </a>
+                </li>
+                <li>
+                <a>
+                <i class="icon bell"></i> Notifications
+                </a>
+              </li>
+            </ul>
+     </div>
+</div>
+</div>
+<div class="twelve wide column div_margin">
+<div class="ui container">
+<p class="ui block header link_center"><strong><i class="icon circle orange"></i>All over Report</strong></p>
+<%= pie_chart [["Approved User" , @approved] , ["Unapproved User" , @notapproved] , ["Not Paid User", @notpaid]] %>
+<br><br><br>
+<div>
+  <p class="ui block header  link_center"><strong><i class="icon sort amount up orange"></i>Weekly User Creation Report</strong></p>
+  <%= column_chart User.group_by_day_of_week(:created_at, format: "%a").count %>
+</div>
+<br><br><br>
+<div>
+  <p class="ui block header  link_center"><strong><i class="icon chart line orange"></i>Weekly Payments Report</strong></p>
+  <%= area_chart Payment.group_by_day(:created_at).count %>
+</div><br>
+
+</div>
+</div>

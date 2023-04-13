@@ -71,8 +71,23 @@ group :test do
   gem "webdrivers"
 end
 
-
+group :production do
+  gem 'pg'
+end
 
 gem 'devise'
 gem 'rest-client'
 gem 'semantic-ui-sass'
+gem "chartkick"
+gem "groupdate"
+
+gem 'rubyzip', '>= 1.2.1'
+gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c8ac844'
+gem 'axlsx_rails'
+gem 'stripe'
+
+gem "will_paginate", "~> 3.3"
+
+gem "ransack", "~> 4.0"
+
+gem "sidekiq", "~> 7.0"

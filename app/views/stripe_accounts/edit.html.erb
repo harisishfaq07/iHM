@@ -1,0 +1,26 @@
+<br><br><br><br><br>
+
+<div class="ui container">
+<p class="link_center"><strong>Edit Stripe Account</strong></p>
+<div class="ui form">
+<%= form_for(@stripe) do |p| %>
+    <div class="field">
+      <label>Email</label>
+      <%= p.text_field :email , placeholder: "Enter Stripe email"%>
+    </div>
+    <div class="field">
+      <label>Published key</label>
+      <%= p.text_field :p_key , placeholder: "Enter stripe published key"%>
+    </div>
+    <div class="field">
+    <label>Secret key</label>
+    <%= p.text_field :s_key , placeholder: "Enter stripe secret key"%>
+  </div>
+  <%= p.submit "Update " , class:"ui button blue"%>
+  <% end %>
+
+<br>
+<%= link_to "Back" , :back %>
+</div>
+
+</div>

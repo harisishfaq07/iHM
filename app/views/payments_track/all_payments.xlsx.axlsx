@@ -1,0 +1,12 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "Payments") do |sheet|
+  # Create the header row
+  sheet.add_row ["User", "Package bought", "Price"]
+  # Create entries for each item
+  @payments.each do |item|
+    email = User.find(item.user_id).email
+    package = Package.find(item.package_no)
+    sheet.add_row [email, package.name , package.price]
+  end
+end

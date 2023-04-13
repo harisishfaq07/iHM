@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  p_key: MyString
+  s_key: MyString
+  email: MyString
+  status: 1
+
+two:
+  p_key: MyString
+  s_key: MyString
+  email: MyString
+  status: 1

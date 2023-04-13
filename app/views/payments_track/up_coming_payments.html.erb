@@ -1,0 +1,43 @@
+
+<div class="ui container">
+<br><br><br>
+<div class="link_center"><strong>Upcoming Payments</strong></div>
+<table class="ui compact celled definition table">
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>User</th>
+      <th>Package Bought</th>
+      <th>Price</th>
+      <th>Notify</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @payments.each do |p| %>
+    <tr>
+      <td class="collapsing">
+      <% if p.status == 1 %>
+        <div class="link_center">   <i class="icon check green"></i> </div>
+        <% else %>
+        <div class="link_center"> <i class="icon x icon red"></i></div>
+        <% end %>
+      </td>
+      <td><%= p.email %></td>
+      <td>-</td>
+      <td>-</td>
+      <td><%= button_to "Notify User" , payments_track_send_payment_reminder_path(id: p.id) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+  <tfoot class="full-width">
+    <tr>
+      <th></th>
+      <th colspan="4">
+        <div class="ui small button">
+          <%= link_to "Back" , :back %>
+        </div>
+      </th>
+    </tr>
+  </tfoot>
+</table>
+</div>

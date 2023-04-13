@@ -1,0 +1,10 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "Verified Users") do |sheet|
+  # Create the header row
+  sheet.add_row ["Name", "Email", "Gender" , "Country"]
+  # Create entries for each item
+  @users.each do |item|
+    sheet.add_row [item.first_name, item.email, item.gender, item.country]
+  end
+end

@@ -1,27 +1,27 @@
 <h2 class="ui center aligned icon header">
-  <i class="circular money bill alternate outline icon green"></i>
-  Do Payment to continue...
+<i class="circular money bill alternate outline icon green"></i>
+Do Payment to continue...
 </h2><br>
 <div class="set_step"> 
 <div class="ui ordered steps ">
-  <div class="completed step">
-    <div class="content">
-      <div class="title">Sign-up</div>
-      <div class="description">Congratulations!</div>
-    </div>
-  </div>
-  <div class="active step">
-    <div class="content">
-      <div class="title">Billing</div>
-      <div class="description">Enter billing information</div>
-    </div>
-  </div>
-  <div class="active step">
-    <div class="content">
-      <div class="title">Account Activate</div>
-      <div class="description">Verify your Account</div>
-    </div>
-  </div>
+<div class="completed step">
+<div class="content">
+<div class="title">Sign-up</div>
+<div class="description">Congratulations!</div>
+</div>
+</div>
+<div class="active step">
+<div class="content">
+<div class="title">Billing</div>
+<div class="description">Enter billing information</div>
+</div>
+</div>
+<div class="active step">
+<div class="content">
+<div class="title">Account Activate</div>
+<div class="description">Verify your Account</div>
+</div>
+</div>
 </div>
 </div>
 <br><br>
@@ -31,7 +31,6 @@
     <form class="ui form">
   <h4 class="ui dividing header">Avaiable Packages</h4>
   <%= f.hidden_field :user_id, :value => @user.id %>
-
   <div class="field">
 
     <div class="fields">
@@ -50,7 +49,11 @@
         <label>Price: </label>
         <%= p.price %>$
         </div>
-        <%= f.radio_button :package_no , p.id , class: "package_show#{p.id}" ,:required => true %>
+        <% if p.name.downcase == "free" %>
+        <%= f.radio_button :package_no , p.id , class: "free_package" %>
+        <% else %>
+        <%= f.radio_button :package_no , p.id , class: "package_show" ,:required => true %>
+        <% end %>
         </div>
         </div> 
       <% end %> 
@@ -64,7 +67,7 @@
   <div class = "ui form">
   <div class="field">
     <label>Card Type</label>
-      <%= f.select :brand , ["Master card" , "Vise", "Credit Card", "American Express", "Discover"] %>
+      <%= f.select :brand , ["Master card" , "Visa", "Credit Card", "American Express", "Discover"] %>
   </div>
   
   <br>
@@ -105,16 +108,11 @@ $(document).ready(function(){
         $(".payment_toggle").hide();
     })
 
-    $(".package_show1").click(function(){
+    $(".package_show").click(function(){
         $(".payment_toggle").slideDown();
     })
-    $(".package_show2").click(function(){
-        $(".payment_toggle").slideDown();
-    })
-    $(".package_show3").click(function(){
-        $(".payment_toggle").slideDown();
-    })
-    $(".package_show4").click(function(){
+    
+    $(".free_package").click(function(){
         $(".payment_toggle").slideUp();
     })
 })

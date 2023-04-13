@@ -1,16 +1,24 @@
-<h2>Forgot your password?</h2>
 
+
+
+
+<h2 class="ui center aligned icon header">
+  <i class="circular redo icon green"></i>
+  Regenerate your Password
+</h2>
+<br><br>
+<div class="ui container">
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+    <div class = "ui form">
+    <div class = "two fields">
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"Enter email to regenerate new password" %>
+    </div>
+    <br><br><br><br><br><br>
+    <div>
+        <%= f.submit "Send me reset password instructions", class:"ui blue submit button centered" %>
+    </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+</div>

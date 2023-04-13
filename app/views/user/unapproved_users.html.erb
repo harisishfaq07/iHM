@@ -1,0 +1,76 @@
+<div class="ui container">
+<br><br><br>
+
+<div class="link_right">
+<i class="icon cloud download"></i>
+<%=
+  link_to 'Export Users',
+  user_verified_users_path(format: :xlsx)
+%>
+</div>
+<div class="link_center"><strong>Total Unapproved Users: <%= @users.count %></strong></div>
+<table class="ui compact celled definition table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Payment</th>
+      <th>Status</th>
+      <th>Notify</th>
+      <th>Show</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @users.each do |p| %>
+    <tr>
+    <% if p.first_name.present? %>
+      <td><%=p.first_name%></td>
+      <% else %>
+      <td>-</td>
+      <% end %>
+      <td><%=p.email%></td>
+      <% if p.payment == 1 %>
+      <td><i class="icon check green"></i></td>
+      <% else %>
+      <td><i class="icon x icon red"></i></td>
+      <% end %>
+
+      <% if p.status == 1 %>
+      <td><i class="icon check green"></i></td>
+      <% else %>
+      <td><i class="icon x icon red"></i></td>
+      <% end %>
+
+
+      <% if p.payment == 1 %>
+      <td><%= button_to "Notify user" , user_send_regenerate_active_token_email_path(id: p.id) %></td>
+      <% else %>
+      <td><%= button_to "Notify user" ,  payments_track_send_payment_reminder_path(id: p.id) %></td>
+     
+      <% end %>
+
+
+      <td><%= link_to "Show" , user_view_user_path(id: p.id) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+  <tfoot class="full-width">
+    <tr>
+      <th></th>
+      <th colspan="4">
+        <div class="ui right floated small labeled icon button">
+          <i class="user icon"></i> <%= link_to "Add new user" %>
+        </div>
+        <div class="ui small button">
+          <%= link_to "Back" , :back %>
+        </div>
+      </th>
+    </tr>
+  </tfoot>
+</table>
+</div>
+
+
+<script>
+
+</script>

@@ -1,7 +1,19 @@
 <div>
-    <%= video_tag "video.mp4" , autoplay: :autoplay, loop: :loop, muted: :muted, class: "home_video" %>
+    <%= video_tag "vid.mp4" , autoplay: :autoplay, loop: :loop, muted: :muted, class: "home_video" %>
     <div>
-    <button class="ui inverted button centered"><i class="icon user red"></i><%= link_to "Register Yourself"  , new_user_registration_path %></button>
-    <h2 class="head1">Keep your family up-to-date in your busy routine</h2>
+    <button class="ui button centered"><i class="icon user red"></i><%= link_to "Register Yourself"  , new_user_registration_path , class: "register_button"%></button>
+    <h2 class="head1">Keep your family deciplined in your busy routine</h2>
     </div>
 </div>
+<div class = "loader"> 
+   <div class="ui active large text centered inline loader white">Loading</div>
+</div>
+
+<script>
+$(document).ready(function(){
+    $(".loader").hide();
+    $(".register_button").click(function(){
+    $(".loader").show();
+    })
+})
+</script>

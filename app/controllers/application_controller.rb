@@ -3,7 +3,27 @@ class ApplicationController < ActionController::Base
     protect_from_forgery with: :exception
 
     before_action :configure_permitted_parameters, if: :devise_controller?
-   
+    before_action :schedule_expiration
+
+ # Controller Actions
+    def regenerate_token(id) #for controller
+          @user = User.find(id)
+          if @user.status == 0
+          random_string = SecureRandom.hex(8)
+          @user.update(active_token: random_string)
+          UserMailer.activate_account(@user,random_string).deliver_later
+          flash.notice = "Your token is regenerated kindly check your email!"
+          redirect_to user_activate_account_path(id: @user.id)
+          else
+               flash.alert = "Please try again!"
+               redirect_to new_user_session_path
+          end
+     end
+
+
+     def schedule_expiration
+          UpdatePayment.perform_now
+     end
     protected
 
          def configure_permitted_parameters
