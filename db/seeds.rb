@@ -8,5 +8,5 @@
 
 
 # Create Admin
-@user = User.new(email: "admin@ihm.com" , password: "password" , status: 1 , payment: 1 , admin: 1 , first_name: "admin" , last_name: "admin" )
+@user = User.new(email: "admin@ihm.com" , password: "password" , status: 1 , payment: 1 , admin: 1 , first_name: "admin" , last_name: "account" )
 @user.save
