@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
     protect_from_forgery with: :exception
 
     before_action :configure_permitted_parameters, if: :devise_controller?
-    before_action :schedule_expiration
+    before_action :schedule_expiration # Manual Job
+    before_action :account_lock_status , if: :user_signed_in?
 
  # Controller Actions
     def regenerate_token(id) #for controller
@@ -20,6 +21,15 @@ class ApplicationController < ActionController::Base
           end
      end
 
+
+     def account_lock_status
+       @parent =  User.find(current_user.parent_id) if current_user.parent_id != 0
+          if @parent.present? && @parent.lockable.present?
+               sign_out current_user 
+          elsif current_user.lockable.present?
+               sign_out current_user
+          end
+     end
 
      def schedule_expiration
           UpdatePayment.perform_now

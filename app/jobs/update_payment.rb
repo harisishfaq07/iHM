@@ -1,10 +1,10 @@
 class UpdatePayment < ApplicationJob
 
     def perform
-      u = User.all.where(payment: 1, status: 1, admin: 0)
+      u = User.all.where(payment: 1, status: 1, admin: 0, parent_id: 0)
       u.each do |u|
         if u.payment_date.present? 
-            valid_till = u.payment_date.to_i + 2
+            valid_till = u.payment_date.to_i + 30
             remaining_days = valid_till - Time.now.strftime("%d").to_i
             if remaining_days == 0
                 u.update(payment_date: nil, payment: 0)

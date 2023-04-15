@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_one :lockable , dependent: :destroy
   has_one :family , dependent: :destroy
   has_many :tasks , dependent: :destroy
+  # has_one :stripe_accounts , dependent: :destroy
 # Validations
 validates :email, uniqueness: true
 
@@ -56,7 +57,7 @@ validates :email, uniqueness: true
   end
 
   def days_left
-     valid_till = payment_date.to_i + 2
+     valid_till = payment_date.to_i + 30
      days_left = valid_till - Time.now.strftime("%d").to_i
      if days_left < 5
       return "Please do your payment, After #{days_left} days your account will be locked"
