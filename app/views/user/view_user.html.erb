@@ -191,7 +191,7 @@
                                         </div>
                                         <div class="col-md-6">
                                         <% if @user.payment == 1 %>
-                                           <% if @user.days_left.to_i < 10 %>
+                                           <% if @user.days_left.to_i <= 5 %>
                                            <div class="warning" > <%= @user.days_left %></div>
                                            <% else %>
                                            <div> <%= @user.days_left %></div>
