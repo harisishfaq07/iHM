@@ -13,7 +13,7 @@ class TasksController < ApplicationController
       if @dead_day >= @current_day
         if current_user.parent_id == 0
             if params[:task]["assign_to"].present?
-              @task = Task.new(task_name: params[:task]["task_name"], task_desc: params[:task]["task_desc"], dead_time: params[:task]["dead_time"], dead_day: @dead_day,  member_id: params[:task]["assign_to"] , assign_to: params[:task]["assign_to"] , task_type: @task_type )
+              @task = Task.new(task_name: params[:task]["task_name"], task_desc: params[:task]["task_desc"], dead_time: params[:task]["dead_time"], dead_day: @dead_day,  member_id: params[:task]["assign_to"] , assign_to: params[:task]["assign_to"], assigned_by: current_user.email , task_type: @task_type )
             else
               @task = Task.new(task_name: params[:task]["task_name"], task_desc: params[:task]["task_desc"] ,dead_time: params[:task]["dead_time"], dead_day: @dead_day, user_id: current_user.id , task_type: @task_type)
             end
@@ -24,6 +24,10 @@ class TasksController < ApplicationController
           else 
                   @member_id = FamilyMember.find_by_email(current_user.email).id
                   @task = Task.new(task_name: params[:task]["task_name"], task_desc: params[:task]["task_desc"], dead_time: params[:task]["dead_time"], dead_day: @dead_day, member_id: @member_id , task_type: @task_type)
+                  if @task.save 
+                    flash.notice = "Task Created Successfully"
+                    redirect_to tasks_new_path
+                  end
           end
         else
           flash.alert = "You can not create task on Previous Days. Please create for today or for next days"
@@ -32,7 +36,12 @@ class TasksController < ApplicationController
     end #create_end
 
     def user_tasks
+      if current_user.parent_id == 0
          @tasks = current_user.tasks.where(task_type: params[:type])
+      else
+        @member = FamilyMember.find_by_email(current_user.email)
+        @tasks  = Task.all.where(task_type: params[:type]).where(member_id: @member.id)
+      end
       respond_to do |format|
           format.js {@tasks }
           format.html
@@ -52,7 +61,7 @@ class TasksController < ApplicationController
       @task = Task.find(params[:id])
       if @dead_day >= @current_day
         if params[:task]["assign_to"].present?
-          @memberTask = Task.new(task_name: params[:task]["task_name"], task_desc: params[:task]["task_desc"], dead_time: params[:task]["dead_time"], dead_day: @dead_day,  member_id: params[:task]["assign_to"] , assign_to: params[:task]["assign_to"] , task_type: @task_type )
+          @memberTask = Task.new(task_name: params[:task]["task_name"], task_desc: params[:task]["task_desc"], dead_time: params[:task]["dead_time"], dead_day: @dead_day,  member_id: params[:task]["assign_to"] , assign_to: params[:task]["assign_to"], assigned_by: current_user.email , task_type: @task_type )
           if @memberTask.save
              @task.destroy
              flash.notice = "Task update Successfully!"
@@ -82,11 +91,19 @@ class TasksController < ApplicationController
     end
 
     def update_tasks_type
-      @tasks = current_user.tasks
+      if current_user.parent_id == 0
+         @tasks = current_user.tasks
+      else
+        @member = FamilyMember.find_by_email(current_user.email)
+        @tasks = Task.all.where(member_id: @member.id)
+      end
+
       @current_day = Time.now.strftime("%Y-%m-%d")
       @tasks.each do |t|
           if t.dead_day < @current_day
              t.previous!
+          elsif t.schedule? && t.dead_day == @current_day
+             t.today!
           end
       end
     end
