@@ -12,8 +12,8 @@ class TasksController < ApplicationController
       @task = Task.new
       if @dead_day >= @current_day
         if current_user.parent_id == 0
-            if params[:task]["assign_to"].present?
-              @task = Task.new(task_name: params[:task]["task_name"], task_desc: params[:task]["task_desc"], dead_time: params[:task]["dead_time"], dead_day: @dead_day,  member_id: params[:task]["assign_to"] , assign_to: params[:task]["assign_to"], assigned_by: current_user.email , task_type: @task_type )
+            if params[:task]["member_id"].present?
+              @task = Task.new(task_name: params[:task]["task_name"], task_desc: params[:task]["task_desc"], dead_time: params[:task]["dead_time"], dead_day: @dead_day,  member_id: params[:task]["member_id"] , assigned_by: current_user.email , task_type: @task_type )
             else
               @task = Task.new(task_name: params[:task]["task_name"], task_desc: params[:task]["task_desc"] ,dead_time: params[:task]["dead_time"], dead_day: @dead_day, user_id: current_user.id , task_type: @task_type)
             end
@@ -60,8 +60,8 @@ class TasksController < ApplicationController
     def do_edit_task
       @task = Task.find(params[:id])
       if @dead_day >= @current_day
-        if params[:task]["assign_to"].present?
-          @memberTask = Task.new(task_name: params[:task]["task_name"], task_desc: params[:task]["task_desc"], dead_time: params[:task]["dead_time"], dead_day: @dead_day,  member_id: params[:task]["assign_to"] , assign_to: params[:task]["assign_to"], assigned_by: current_user.email , task_type: @task_type )
+        if params[:task]["member_id"].present?
+          @memberTask = Task.new(task_name: params[:task]["task_name"], task_desc: params[:task]["task_desc"], dead_time: params[:task]["dead_time"], dead_day: @dead_day,  member_id: params[:task]["member_id"] , assigned_by: current_user.email , task_type: @task_type )
           if @memberTask.save
              @task.destroy
              flash.notice = "Task update Successfully!"
@@ -80,6 +80,17 @@ class TasksController < ApplicationController
 
     end #do_edit_task_end
 
+    def delete_task
+      @task = Task.find(params[:id])
+      delete = @task.destroy ? true : false if @task.present?
+      if delete
+        flash.notice = "Delete Successfully"
+        redirect_to tasks_new_path
+      else
+        flash.alert = "Please try again!"
+        redirect_to tasks_new_path
+      end
+    end
 
     private
     def task_validations

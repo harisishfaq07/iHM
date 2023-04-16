@@ -35,7 +35,11 @@
 
   <div class="field">
     <label>Role</label>
-    <%= p.select :role , ["Wife" , "Husband" ,  "Son" , "Daughter"]%>
+    <%= p.select :role , ["Wife" , "Husband" ,  "Son" , "Daughter"] , :include_blank => true , :required => true%>
+  </div>
+
+  <div class="field">
+  <%= p.check_box :alpha %>  Alpha Member
   </div>
 
   <div class="field">
@@ -76,6 +80,7 @@
       <th>Email</th>
       <th>Gender</th>
       <th>Relation</th>
+      <th>Alpha Member</th>
       <th>Show</th>
       <th>Delete</th>
     </tr>
@@ -91,11 +96,12 @@
       <td><%=p.email%></td>
       <td><%=p.gender%></td>
       <td><%=p.role%></td>
+      <td><%=p.alpha%></td>
       <td>
          <div class="inline"><%= link_to "Show" , user_view_member_path(id: p.id) %> 
       </td>
       <td>
-         <%= button_to "Delete" , user_delete_user_path(id: p.id) , method: :delete %></div>
+         <%= button_to "Delete" , user_delete_member_path(id: p.id) %></div>
       </td>
     </tr>
     <% end %>

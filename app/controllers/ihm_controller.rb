@@ -6,4 +6,7 @@ class IhmController < ApplicationController
 
     def dashboard
     end
+
+    def child_dash
+    end
 end

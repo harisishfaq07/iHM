@@ -39,7 +39,7 @@
 <% if current_user.parent_id == 0 %>
   <div class="field">
     <label>Assign_to</label>
-    <%= p.select :assign_to , @members.collect { |m| [m.email, m.id] } , :include_blank => true %>
+    <%= p.select :member_id , @members.collect { |m| [m.email, m.id] } , :include_blank => true %>
   </div>
 <% end %>
 
