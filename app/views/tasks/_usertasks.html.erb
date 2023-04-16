@@ -1,0 +1,41 @@
+<table class="ui compact celled definition table">
+  <thead>
+    <tr>
+      
+      <th>Task Name</th>
+      <th>Description</th>
+      <th>Dead Day</th>
+      <th>Dead Time</th>
+      <th>Status</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  <% @tasks&.each do |p| %>
+    <tr>
+      <td class="collapsing">
+      <%= p.task_name %>
+      </td>
+      <td><%=p.task_desc%></td>
+      <td><%=p.dead_day%></td>
+      <td><%=p.dead_time%></td>
+      <td><%=p.status%></td>
+      <td><%= link_to "Edit" , tasks_edit_task_path(:id => p.id) %></td>
+      <td>Delete</td>
+    </tr>
+    <% end %>
+
+    </tbody>
+  <tfoot class="full-width">
+    <tr>
+      <th></th>
+      <th colspan="4">
+        <div class="ui small button">
+          <%= link_to "Back" , :back %>
+        </div>
+      </th>
+    </tr>
+  </tfoot>
+</table>

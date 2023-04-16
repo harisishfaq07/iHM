@@ -1,0 +1,37 @@
+<div class="ui container">
+
+<div class="link_center">
+<h1>Edit Task </h1>
+</div>
+<% @task.dead_time%>
+<div class="add_member">
+<div class="ui form">
+<%= form_for(@task , url: tasks_do_edit_task_path(id: @task.id), method: :POST) do |f| %>
+ 
+    <div class="field">
+    Name: <%= f.text_field :task_name %><br>
+    </div>c
+    <div class="field">
+    Description: <%= f.text_area :task_desc %><br>
+    </div>
+    <div class="field">
+    Time: <%= f.time_field :dead_time , :value => @task.dead_time%><br>
+    </div>
+    <div class="field">
+    Day: <%= f.date_field :dead_day , :value => @task.dead_day%><br>
+    </div>
+
+    <% if current_user.parent_id == 0 %>
+    <div class="field">
+    Assign_to: <%= f.select :assign_to , @members&.collect { |m| [m.email, m.id] } , :include_blank => true %>
+    </div>
+    <% end %>
+<br>
+    <%= f.submit "Update" , class:"ui primary button" %>
+<% end %>
+
+
+</div>
+</div>
+
+</div>
