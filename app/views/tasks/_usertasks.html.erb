@@ -6,7 +6,9 @@
       <th>Description</th>
       <th>Dead Day</th>
       <th>Dead Time</th>
-      <th>Status</th>
+     <% if current_user.parent_id != 0 %>
+      <th>Assigned By</th>
+     <% end %>
       <th>Edit</th>
       <th>Delete</th>
     </tr>
@@ -21,9 +23,19 @@
       <td><%=p.task_desc%></td>
       <td><%=p.dead_day%></td>
       <td><%=p.dead_time%></td>
-      <td><%=p.status%></td>
-      <td><%= link_to "Edit" , tasks_edit_task_path(:id => p.id) %></td>
-      <td>Delete</td>
+      <% if current_user.parent_id != 0 %>
+      <td><%=p.assigned_by%></td>
+     <% end %>
+    <td> 
+      <%= link_to_if (!p.assigned_by.present?) , "Edit" , tasks_edit_task_path(:id => p.id) do %>
+        <p class="link_center"><i class="window minimize red icon"></i></p>
+      <% end %> 
+    </td>
+    <td> 
+    <%= link_to_if (!p.assigned_by.present?) , "Delete" , tasks_edit_task_path(:id => p.id) do %>
+      <p class="link_center"><i class="window minimize red icon"></i></p>
+    <% end %> 
+  </td>
     </tr>
     <% end %>
 
@@ -39,3 +51,12 @@
     </tr>
   </tfoot>
 </table>
+
+
+<script>
+$(document).ready(function(){
+  $(".do_not_go").click(function(e){
+    e.preventDefault();
+  })
+})
+</script>
