@@ -47,6 +47,9 @@ Rails.application.routes.draw do
 get 'tasks/new'
 post 'tasks/create'
 get 'tasks/user_schedule'
+post 'tasks/user_tasks'
+get 'tasks/edit_task'
+post 'tasks/do_edit_task'
 
 
   post 'payments/create_payment'
