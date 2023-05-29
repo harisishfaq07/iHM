@@ -1,0 +1,52 @@
+<div class="ui container">
+
+<div class="link_center">
+<h1> All Members </h1>
+</div>
+<table class="ui compact celled definition table">
+<thead>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Gender</th>
+    <th>Relation</th>
+    <th>Alpha Member</th>
+    <th>Show</th>
+    <th>Delete</th>
+  </tr>
+</thead>
+<tbody>
+
+<% @members&.each do |p| %>
+  <tr>
+    <td class="collapsing">
+    <%= p.id %>
+    </td>
+    <td><%=p.name%></td>
+    <td><%=p.email%></td>
+    <td><%=p.gender%></td>
+    <td><%=p.role%></td>
+    <td><%=p.alpha%></td>
+    <td>
+       <div class="inline"><%= link_to "Show" , user_view_member_path(id: p.id) %> 
+    </td>
+    <td>
+       <%= button_to "Delete" , user_delete_member_path(id: p.id) %></div>
+    </td>
+  </tr>
+  <% end %>
+
+  </tbody>
+<tfoot class="full-width">
+  <tr>
+    <th></th>
+    <th colspan="4">
+      <div class="ui small button">
+        <%= link_to "Back" , :back %>
+      </div>
+    </th>
+  </tr>
+</tfoot>
+</table>
+</div>
