@@ -10,7 +10,7 @@
  
     <div class="field">
     Name: <%= f.text_field :task_name %><br>
-    </div>c
+    </div>
     <div class="field">
     Description: <%= f.text_area :task_desc %><br>
     </div>
@@ -23,7 +23,7 @@
 
     <% if current_user.parent_id == 0 %>
     <div class="field">
-    Assign_to: <%= f.select :assign_to , @members&.collect { |m| [m.email, m.id] } , :include_blank => true %>
+    Assign_to: <%= f.select :member_id , @members&.collect { |m| [m.email, m.id] } , :include_blank => true %>
     </div>
     <% end %>
 <br>

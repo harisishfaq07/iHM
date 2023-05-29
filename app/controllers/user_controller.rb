@@ -152,6 +152,21 @@ class UserController < ApplicationController
     end
   end
 
+  def delete_member
+      @member = FamilyMember.find(params[:id])
+      @user = User.find_by_email(@member.email)
+      @member.status = 0
+      if @member.save
+        @user.destroy if @user.present?
+        FamilyMember.all.where(status: 0).delete_all
+        flash.notice = "Member deleted successfully!"
+        redirect_to user_add_family_members_path
+      else
+        flash.alert = "Error: Try again!"
+        redirect_to user_add_family_members_path
+      end
+  end
+
   def locked_user
      @users = User.joins(:lockable)
   end
@@ -181,7 +196,7 @@ class UserController < ApplicationController
 
    if current_user.update(first_name: params[:user]["first_name"] , last_name: params[:user][:last_name],
                          gender: params[:user]["gender"], country: params[:user]["country"], 
-                         dateofbirth: params[:user]["dateofbirth"]
+                         dateofbirth: params[:user]["dateofbirth"] , phone_no: params[:user]["phone_no"]
                          )
                          flash.notice = "Profile Updated Successfully!"
                          redirect_to user_view_user_path(id: current_user.id)
@@ -210,7 +225,8 @@ class UserController < ApplicationController
       end
   end
   def add_family_members
-    @members = FamilyMember.where(family_id: current_user.family.id).joins(:family)
+    # @members = FamilyMember.where(family_id: current_user.family.id , status: 1).joins(:family)
+    @members = FamilyMember.all.where(family_id: current_user.family.id , status: 1)
   end
 
   def do_add_family_members
@@ -218,9 +234,9 @@ class UserController < ApplicationController
       find_dup = User.find_by_email(params[:family_member]["email"])
       if !find_dup.present?
         if @member = FamilyMember.create(name: params[:family_member]["name"], email: params[:family_member]["email"],
-                              gender: params[:family_member]["gender"], role: params[:family_member]["role"], 
+                              gender: params[:family_member]["gender"], role: params[:family_member]["role"], alpha: params[:family_member][:alpha] ,
                               password: params[:family_member]["password"], family_id: current_user.family.id)
-            User.create(first_name: @member.name, email: @member.email, gender: @member.gender, password: @member.password, parent_id: current_user.id)
+            User.create(first_name: @member.name, email: @member.email, gender: @member.gender, alpha: @member.alpha , password: @member.password, parent_id: current_user.id)
                               flash.notice = "#{@member.name} Add Successfully"
                               redirect_to user_add_family_members_path
         end

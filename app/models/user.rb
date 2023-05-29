@@ -53,7 +53,7 @@ validates :email, uniqueness: true
   end
 
   def age
-     return  Time.now.strftime("%Y") - dateofbirth.strftime("%Y")
+     return  "#{Time.now.strftime("%Y").to_i - dateofbirth.to_i} "+"years"
   end
 
   def days_left

@@ -6,4 +6,11 @@ class IhmController < ApplicationController
 
     def dashboard
     end
+
+    def child_dash
+    end
+
+    def perform_job
+        ChargeUser.perform_in(10)
+    end
 end

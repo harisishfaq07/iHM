@@ -1,5 +1,5 @@
-require 'sidekiq/web'
 Rails.application.routes.draw do
+  require 'sidekiq/web'
   mount Sidekiq::Web => "/sidekiq"
 
   root "ihm#homepage"
@@ -22,11 +22,14 @@ Rails.application.routes.draw do
 
   get 'payments/payment'
   get 'ihm/dashboard'
+  post 'ihm/perform_job'
+  get 'ihm/child_dash'
   get 'user/new_user'
   get 'user/locked_user'
   get 'user/edit_profile'
   get 'user/register_family'
   get 'user/add_family_members'
+  post 'user/delete_member'
   post 'user/do_family_register'
   post 'user/do_add_family_members'
   get 'user/view_member'
@@ -42,6 +45,7 @@ Rails.application.routes.draw do
   get 'user/unapproved_users'
   get 'user/unpaid_users'
   post 'user/send_regenerate_active_token_email'
+  get 'user/all_family_members'
 
 
 get 'tasks/new'
@@ -50,6 +54,7 @@ get 'tasks/user_schedule'
 post 'tasks/user_tasks'
 get 'tasks/edit_task'
 post 'tasks/do_edit_task'
+post 'tasks/delete_task'
 
 
   post 'payments/create_payment'

@@ -11,6 +11,7 @@
       <th>Description</th>
       <th>Dead Day</th>
       <th>Dead Time</th>
+      <th>Assigned by</th>
       <th>Status</th>
       <th>Edit</th>
       <th>Delete</th>
@@ -26,9 +27,10 @@
       <td><%=p.task_desc%></td>
       <td><%=p.dead_day%></td>
       <td><%=p.dead_time%></td>
+      <td><%= p.assigned_by %></td>
       <td><%=p.status%></td>
-      <% if !p.assign_to.present? %>
-      <td>Edit to</td>
+      <% if p.assigned_by == current_user.email %>
+      <td>Edit</td>
       <td>Delete</td>
       <% end %>
     </tr>

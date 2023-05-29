@@ -98,18 +98,11 @@
                                                 <label>Phone</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>-</p>
+                                            <% if @user.phone_no.present? %>
+                                                <p><%= @user.phone_no%></p>
+                                            <% end%>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Profession</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>-</p>
-                                            </div>
-                                        </div>
-
                                         <div class="row">
                                         <div class="col-md-6">
                                             <label>Gender</label>
@@ -132,7 +125,7 @@
                                 <div class="col-md-6">
                                     <label>Age</label>
                                 </div>
-                                <div class="col-md-6">
+                                 <div class="col-md-6">
                                 <% if @user.dateofbirth.present? %>
                                     <p><%= @user.age%></p>
                                 <% end%>

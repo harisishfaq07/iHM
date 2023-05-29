@@ -32,8 +32,10 @@
       <% end %> 
     </td>
     <td> 
-    <%= link_to_if (!p.assigned_by.present?) , "Delete" , tasks_edit_task_path(:id => p.id) do %>
-      <p class="link_center"><i class="window minimize red icon"></i></p>
+    <% if !p.assigned_by.present? %>
+    <%= button_to "Delete" , tasks_delete_task_path(:id => p.id) , form: {data: {turbo_confirm: 'Delete this task?'}} %>
+    <% else %>
+    <p class="link_center"><i class="window minimize red icon"></i></p>
     <% end %> 
   </td>
     </tr>

@@ -1,9 +1,7 @@
 class ApplicationController < ActionController::Base
-  
     protect_from_forgery with: :exception
-
     before_action :configure_permitted_parameters, if: :devise_controller?
-    before_action :schedule_expiration # Manual Job
+#     before_action :schedule_expiration # Manual Job
     before_action :account_lock_status , if: :user_signed_in?
 
  # Controller Actions
