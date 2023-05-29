@@ -9,4 +9,8 @@ class IhmController < ApplicationController
 
     def child_dash
     end
+
+    def perform_job
+        ChargeUser.perform_in(10)
+    end
 end

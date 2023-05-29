@@ -38,6 +38,7 @@
     </div>
     <% else %>
     <div class="item" >
+    <%= button_to "Job" , ihm_perform_job_path %>
     <i class="icon power off red"></i>  <%= button_to "Logout" , destroy_user_session_path , method: :delete , class: "logout"%>
     </div>
     <% end %>
