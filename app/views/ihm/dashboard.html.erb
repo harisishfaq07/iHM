@@ -27,7 +27,10 @@
  <li class="menusection"><%= link_to "Profile" , user_view_user_path(id: current_user.id) %></li>
           <li><a href=""><span class="sidebar-icon"><i class="fa fa-dashboard"></i></span> <span class="menu-title">Dashboard</span></a></li>
           <li><a href="/tasks/new"><span class="sidebar-icon"><i class="fa fa-bullseye"></i></span> <span class="menu-title">Daily Schedule</span></a></li>
+         <% if current_user.parent_id ==0 %>
           <li><a href=" /user/register_family"><span class="sidebar-icon"><i class="icon user plus"></i></span> <span class="menu-title">Family Management</span></a></li>
+         <% end %>
+          <li><a href=" /user/all_family_members"><span class="sidebar-icon"><i class="icon user plus"></i></span> <span class="menu-title">Family Members</span></a></li>
           <li><a href=""><span class="sidebar-icon"><i class="icon users"></i></span> <span class="menu-title">Family Group</span></a></li>
           <li><a href=""><span class="sidebar-icon"><i class="icon paper plane outline"></i></span> <span class="menu-title">Inbox</span></a></li>
           <li><a href=""><span class="sidebar-icon"><i class="icon barcode"></i></span> <span class="menu-title">Package Details</span></a></li>
